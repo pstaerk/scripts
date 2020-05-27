@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <tuple>
+#include <utility>
 
 const int mandel_iterator(double x, double y, int iterations)
 {
@@ -48,19 +49,45 @@ const void picture_render(const int& px, const int& py, const double& xmin, cons
     }
 }
 
-void interpolate_zoom(std::tuple<double, double> xstart, std::tuple<double, double> ystart,
+constexpr std::tuple<double, double> calc_tuple_interpol(std::tuple<double, double> told, std::tuple<double, double> tnew, const double& alpha)
+{
+    double beta = (1-alpha);
+    return std::tuple<double, double>{beta*std::get<0>(told)+alpha*std::get<0>(tnew), beta*std::get<1>(told)+alpha*std::get<1>(tnew)};
+}
+
+void interpolate_zoom(const int& px, const int& py, const int& iterations, std::tuple<double, double> xstart, std::tuple<double, double> ystart,
         std::tuple<double, double> xend, std::tuple<double, double> yend, const int& steps)
 {
+    std::tuple<double, double> xtemp;
+    std::tuple<double, double> ytemp;
+    double alpha = 0;
     for (int i = 0; i <= steps; ++i) {
+        std::cout << "Calculating frame" << i << std::endl;
+        // Interpolation factor
+        alpha = (double)i / (double)steps;
         // Calculate the interpolated coordinates of this run
-        // Calculate the set and save it with a marker
+        xtemp = calc_tuple_interpol(xstart, xend, alpha);
+        ytemp = calc_tuple_interpol(ystart, yend, alpha);
+
+        std::cout << "Current window is x: " << std::get<0>(xtemp) << std::get<1>(xtemp) << std::endl;
+        std::cout << "Current window is y: " << std::get<0>(ytemp) << std::get<1>(ytemp) << std::endl;
+        
+        // Calculate the set and save it with a marker according to the iteration
+        picture_render(px, py, std::get<0>(xtemp), std::get<1>(xtemp), std::get<0>(ytemp), 
+                std::get<1>(ytemp), iterations, "Render"+std::to_string(i)+".out"); 
     }
 }
 
 int main(int argc, char *argv[])
 {
-    picture_render(2*1000, 2*500, -2.5, 1., -1., 1., 1000, "Myfile2.txt");
+    std::cout << "Calculating the frame" << std::endl;
+    /* picture_render(2*1000, 2*500, -2.5, 1., -1., 1., 1000, "Myfile2.txt"); */
     /* std::tuple<double, double> test = std::tuple<double, double>{-1., 1.}; */
-    /* interpolate_zoom(std::tuple<double, double>{-2., 2.}); */
+    std::tuple<double, double> xstart{-2.5, 1};
+    std::tuple<double, double> ystart{-1, 1};
+    std::tuple<double, double> yend{-.013, .40};
+    std::tuple<double, double> xend{-1.165, -.575};
+
+    interpolate_zoom(2*1000, 2*500, 1000, xstart, ystart, xend, yend, 50);
     return 0;
 }
