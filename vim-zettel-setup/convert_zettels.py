@@ -22,4 +22,5 @@ def bind_note_links(f):
 for f in glob.glob('*.md'):
     bind_note_links(f)
     base = f.replace('.md', '')
-    os.system(f'pandoc -f markdown+task_lists -s -c style.css {f}_tmp -o ../markdown_html/{base}.html')
+    os.system(f'pandoc -f markdown+task_lists -s --mathjax --bibliography ~/Documents/Uni/MSem3-4/msc_thesis_pm/tex/zotero.bib --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true -c style.css {f}_tmp pandoc_options.yaml -o ../markdown_html/{base}.html')
+    os.system(f'rm {f}_tmp')

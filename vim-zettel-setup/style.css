@@ -185,3 +185,11 @@ code {
   border: 1px solid #ccc;
   background-color: #f9f9f9;
 }
+
+div.references {
+    margin-left: 1.5em;
+    text-indent: -1.5em;
+    border-top-style: solid;
+    border-color: gray;
+    margin-top: 4em;
+}
