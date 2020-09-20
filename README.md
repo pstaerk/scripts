@@ -1,6 +1,10 @@
 # scripts
 Small collection of simple scripts that are too small for a single repository.
 
+## Fractal Noise
+Simple fractal noise generator.
+Wrote this to see if I could write something like it in a short amount of time.
+
 ## Mandelbrot
 A simple mandelbrot renderer written in cpp.
 Code is parallelized to allow for faster rendering.
