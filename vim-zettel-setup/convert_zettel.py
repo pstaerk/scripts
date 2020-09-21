@@ -11,6 +11,7 @@ def make_html_link(match):
     """Turn match of vimwiki link to html link.
 
     """
+    print(f'Found {match.group()}')
     return match.group() + '.html'
 
 def bind_note_links(f):
@@ -20,7 +21,7 @@ def bind_note_links(f):
     """
     with open(f, 'r') as ct:
         t = ct.read()
-    t = re.sub('\[.*\]\(\d+', make_html_link, t)
+    t = re.sub('\[[^\]]*\]\(\d+', make_html_link, t)
     with open(f+'_tmp', 'w') as ct:
         ct.write(t)
 
