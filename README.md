@@ -20,3 +20,6 @@ E.g. one might start additional simulations at those points.
 Using the [vim-zettel](https://github.com/michal-h21/vim-zettel) plugin makes it possible to use the [Zettelkasten mehtod](https://en.wikipedia.org/wiki/Zettelkasten) for notetaking.
 Using markdown is the best option in my opinion, but that requires to use pandoc for the html conversion.
 This (super hacked together) script folder in this repository enables one to convert the vimwiki syntax into html with correct styling and options.
+
+## AFM-MD
+Simulates atomic force microscopy on [MDAnalysis](https://github.com/MDAnalysis/mdanalysis/) atom groups.
